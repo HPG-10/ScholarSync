@@ -1,0 +1,69 @@
+/* ============================================================
+   ScholarSync — Custom Styles
+   ============================================================ */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Scholarship card hover effect */
+.scholarship-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+}
+.scholarship-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
+}
+
+/* Navbar brand */
+.navbar-brand {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+/* Card styling */
+.card {
+    border-radius: 12px;
+    border: none;
+}
+
+/* Info box on detail page */
+.info-box {
+    border-radius: 10px;
+    transition: background-color 0.2s;
+}
+.info-box:hover {
+    background-color: #e9ecef !important;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 10px;
+}
+
+/* Table */
+.table thead th {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+}
+
+/* Badge */
+.badge {
+    font-size: 0.85em;
+    padding: 0.5em 0.8em;
+    border-radius: 6px;
+}
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    background-color: rgba(255,255,255,0.25);
+    font-weight: 600;
+    border-bottom: 2px solid #ffffff;
+}

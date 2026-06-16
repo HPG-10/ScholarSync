@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${scholarship.name + ' – ScholarSync'}">Scholarship Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-4">
+    <a th:href="@{/scholarships}" class="btn btn-outline-secondary mb-3">← Back to List</a>
+
+    <!-- Flash messages -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white p-4">
+            <h2 class="mb-1" th:text="${scholarship.name}">Scholarship Name</h2>
+            <p class="mb-0 opacity-75">🏢 Provided by <strong th:text="${scholarship.provider}">Provider</strong></p>
+        </div>
+        <div class="card-body p-4">
+            <div class="row mb-4">
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="info-box text-center p-3 bg-light rounded">
+                        <div class="text-muted small">Minimum CGPA</div>
+                        <div class="fs-4 fw-bold text-primary"
+                             th:text="${scholarship.minCgpa != null ? scholarship.minCgpa : 'None'}">3.50</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="info-box text-center p-3 bg-light rounded">
+                        <div class="text-muted small">Award Amount</div>
+                        <div class="fs-4 fw-bold text-success"
+                             th:text="${scholarship.amount != null ? 'RM ' + scholarship.amount : 'N/A'}">RM 5000</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="info-box text-center p-3 bg-light rounded">
+                        <div class="text-muted small">Faculty</div>
+                        <div class="fs-5 fw-bold"
+                             th:text="${scholarship.faculty != null ? scholarship.faculty : 'All Faculties'}">CS</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="info-box text-center p-3 bg-light rounded">
+                        <div class="text-muted small">Application Deadline</div>
+                        <div class="fs-5 fw-bold text-danger"
+                             th:text="${scholarship.deadline != null ? scholarship.deadline : 'Open'}">2024-12-31</div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="fw-bold">Description</h5>
+            <p th:text="${scholarship.description != null ? scholarship.description : 'No description provided.'}"
+               class="text-muted">Description here.</p>
+
+            <!-- Eligibility Criteria -->
+            <div th:if="${scholarship.eligibilityCriterias != null and !scholarship.eligibilityCriterias.isEmpty()}">
+                <h5 class="fw-bold mt-4">✅ Eligibility Criteria</h5>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item" th:each="c : ${scholarship.eligibilityCriterias}">
+                        <strong th:text="${c.criteriaType}">Type</strong>:
+                        <span th:text="${c.criteriaValue}">Value</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Apply Button -->
+            <div class="mt-4">
+                <div th:if="${alreadyApplied}" class="alert alert-success">
+                    ✅ You have already applied for this scholarship. Check your
+                    <a th:href="@{/applications}">Applications</a> for status.
+                </div>
+                <form th:unless="${alreadyApplied}"
+                      th:action="@{/scholarships/{id}/apply(id=${scholarship.scholarshipId})}"
+                      method="post">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        📩 Apply Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

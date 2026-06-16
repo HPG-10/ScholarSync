@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard – ScholarSync</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-4">
+
+    <!-- Welcome Banner -->
+    <div class="card bg-primary text-white mb-4 shadow">
+        <div class="card-body p-4">
+            <h3 class="mb-1">Welcome back, <span th:text="${student.name}">Student</span>! 👋</h3>
+            <p class="mb-0 opacity-75">
+                CGPA: <strong th:text="${student.cgpa}">3.80</strong> &nbsp;|&nbsp;
+                Faculty: <strong th:text="${student.faculty}">Computer Science</strong> &nbsp;|&nbsp;
+                Nationality: <strong th:text="${student.nationality}">Malaysian</strong> &nbsp;|&nbsp;
+                Income: <strong th:text="${student.incomeLevel}">LOW</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Flash messages -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <!-- Matched Scholarships -->
+    <h4 class="mb-3">🎯 Scholarships Matched For You
+        <span class="badge bg-success ms-2" th:text="${scholarships.size()}">0</span>
+    </h4>
+
+    <div th:if="${scholarships.isEmpty()}" class="alert alert-info">
+        No scholarships matched your current profile. Try browsing
+        <a th:href="@{/scholarships}">all scholarships</a>.
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:unless="${scholarships.isEmpty()}">
+        <div class="col" th:each="s : ${scholarships}">
+            <div class="card h-100 shadow-sm scholarship-card">
+                <div class="card-body">
+                    <h5 class="card-title text-primary" th:text="${s.name}">Scholarship Name</h5>
+                    <p class="card-text text-muted mb-1">🏢 <span th:text="${s.provider}">Provider</span></p>
+                    <p class="card-text mb-1">📊 Min CGPA: <strong th:text="${s.minCgpa != null ? s.minCgpa : 'None'}">3.5</strong></p>
+                    <p class="card-text mb-1">🎓 Faculty: <strong th:text="${s.faculty != null ? s.faculty : 'All Faculties'}">CS</strong></p>
+                    <p class="card-text mb-2">💰 Amount: <strong class="text-success" th:text="${s.amount != null ? 'RM ' + s.amount : 'N/A'}">RM 5000</strong></p>
+                    <p class="card-text small text-muted">⏰ Deadline: <span th:text="${s.deadline != null ? s.deadline : 'Open'}">2024-12-31</span></p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a th:href="@{/scholarships/{id}(id=${s.scholarshipId})}" class="btn btn-primary btn-sm w-100">View & Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a th:href="@{/scholarships}" class="btn btn-outline-primary">Browse All Scholarships →</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

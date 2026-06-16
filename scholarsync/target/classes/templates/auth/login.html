@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login – ScholarSync</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-light">
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4" style="width: 420px;">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">🎓 ScholarSync</h2>
+            <p class="text-muted">Scholarship Discovery & Matching System</p>
+        </div>
+
+        <!-- Alerts -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email / Username</label>
+                <input type="text" name="username" class="form-control"
+                       placeholder="email01@gmail.com or admin" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Password</label>
+                <input type="password" name="password" class="form-control"
+                       placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <hr>
+        <p class="text-center mb-0">
+            New student? <a th:href="@{/register}">Register here</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
